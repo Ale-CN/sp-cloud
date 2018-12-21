@@ -13,8 +13,19 @@ public class Sender {
      * 发送消息
      */
     public void send() {
-        String msg = "Sender : 'i am Sender!!'";
-        System.out.println(msg);
-        template.convertAndSend("queue_hello", msg);
+        String msg = "hello !";
+        System.out.println("Sender send:[" + msg + "]");
+        template.convertAndSend("a_queue", msg);
     }
+
+    /**
+     * 发送消息exchange
+     */
+    public void send2() {
+        String msg = "hello !";
+        System.out.println("Sender send:[" + msg + "]");
+        template.convertAndSend("topicExchange");
+    }
+
+
 }
