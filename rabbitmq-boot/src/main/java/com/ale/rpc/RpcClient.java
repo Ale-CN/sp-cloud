@@ -15,11 +15,11 @@ import java.util.concurrent.TimeoutException;
  * 3.客户端将等待回调队列返回数据。当返回的消息到达时，它将检查correlationId属性。如果该属性值和请求匹配，就将响应返回给程序。
  */
 public class RpcClient {
-    Connection connection = null;
-    Channel channel = null;
-    String queueName = "";
+    private Connection connection = null;
+    private Channel channel = null;
+    private String queueName = "";
 
-    public RpcClient() throws IOException, TimeoutException {
+    private RpcClient() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         connection = factory.newConnection();
@@ -27,7 +27,7 @@ public class RpcClient {
         queueName = channel.queueDeclare().getQueue();
     }
 
-    public String call(String msg) throws IOException, InterruptedException {
+    private String call(String msg) throws IOException, InterruptedException {
         Long startTime = System.currentTimeMillis();
         final String uuid = UUID.randomUUID().toString();
         //后续，服务端根据"replyTo"来指定将返回信息写入到哪个队列
@@ -54,7 +54,7 @@ public class RpcClient {
         return blockQueue.take();
     }
 
-    public void close() throws IOException {
+    private void close() throws IOException {
         connection.close();
     }
 
@@ -63,4 +63,21 @@ public class RpcClient {
         client.call("client");
         client.close();
     }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Channel channel) {
+        this.channel = channel;
+    }
+
 }
