@@ -1,6 +1,7 @@
-package com.ale;
+package com.ale.rabbitmq;
 
-import com.ale.rabbit.Sender;
+import com.ale.rabbitmq.many2many.Sender;
+import com.ale.rabbitmq.many2many.Sender2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,19 +9,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = RabbitMqApplication.class)
-public class HelloTest {
+@SpringBootTest
+public class Many2ManyTest {
 
     @Autowired
-    private Sender sender;
+    Sender sender;
 
-    /**
-     * 调用生产者进行消息发送
-     */
+    @Autowired
+    Sender2 sender2;
+
     @Test
-    public void hello() throws Exception {
-        for(int i = 0;i<2;i++){
-            sender.send();
+    public void test() {
+        for (int i = 0; i < 6; i++) {
+            sender.sende();
+            sender2.sende();
         }
     }
 }
